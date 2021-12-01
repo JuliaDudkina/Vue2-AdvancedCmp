@@ -3,13 +3,23 @@
         <div class="row">
             <div class="col-xs-12">
                 <br>
-                <button class="btn btn-primary">Load Blue Template</button>
-                <button class="btn btn-success">Load Green Template</button>
-                <button class="btn btn-danger">Load Red Template</button>
+                <button class="btn btn-primary" @click="setCurrentCmp('appBlue')">Load Blue Template</button>
+                <button class="btn btn-success" @click="setCurrentCmp('appGreen')">Load Green Template</button>
+                <button class="btn btn-danger" @click="setCurrentCmp('appRed')">Load Red Template</button>
                 <hr>
-                <app-blue></app-blue>
-                <app-green></app-green>
-                <app-red></app-red>
+              <keep-alive>
+                <component :is="currentCmp">
+                  <template v-slot:blue>
+                    <h1>I'm blue</h1>
+                  </template>
+                  <template v-slot:green>
+                    <h1>I'm green</h1>
+                  </template>
+                  <template v-slot:red>
+                    <h1>I'm red</h1>
+                  </template>
+                </component>
+              </keep-alive>
             </div>
         </div>
     </div>
@@ -25,7 +35,17 @@
             appBlue: Blue,
             appGreen: Green,
             appRed: Red
-        }
+        },
+      data(){
+          return{
+            currentCmp: ''
+          }
+      },
+      methods:{
+          setCurrentCmp(cmp){
+            this.currentCmp = cmp;
+          }
+      }
     }
 </script>
 
